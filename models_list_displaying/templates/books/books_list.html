@@ -5,19 +5,33 @@
 {% block content %}
     <div class="container">
         <div class="header">
-            <h1><a href="/books">Каталог</a></h1>
+            <h1><a href="/books/">Каталог</a></h1>
         </div>
         <div class="row">
+            {% for book in books %}
             <div class="book col-md-4">
-                <h2>Сияние</h2>
-                <p>Автор: Стивен Кинг</p>
-                <p>Дата публикации: 2018-09-10</p>
+                <h2>{{ book.name }}</h2>
+                <p>Автор: {{ book.author }}</p>
+                <p>Дата публикации: {{ book.pub_date|date:'Y-m-d' }}</p>
             </div>
-            <div class="book col-md-4">
-                <h2>1984</h2>
-                <p>Автор: Джордж Оруэл</p>
-                <p>Дата публикации: 2015-03-11</p>
-            </div>
+            {% endfor %}
         </div>
+        {% if prev_date or next_date %}
+        <div class="footer">
+            {% if prev_date %}
+                <a class="date-nav" href="/books/{{ prev_date|date:'Y-m-d' }}/">
+                    <span>&lt;</span> {{ prev_date|date:'Y-m-d' }}
+                </a>
+            {% endif %}
+            {% if prev_date and next_date %}
+                <span>&nbsp;&nbsp;&nbsp;</span>
+            {% endif %}
+            {% if next_date %}
+                <a class="date-nav" href="/books/{{ next_date|date:'Y-m-d' }}/">
+                    {{ next_date|date:'Y-m-d' }} <span>&gt;</span>
+                </a>
+            {% endif %}
+        </div>
+        {% endif %}
     </div>
 {% endblock %}
